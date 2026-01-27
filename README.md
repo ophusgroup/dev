@@ -10,7 +10,7 @@ If you have any questions or find instructions unclear, reach out to @bobleesj.
 |------|-------------|-----------|
 | [Case 1](#case-1-quick-fixes-typos-small-bugs-small-features) | Typos, small bugs, documentation | `electronmicroscopy/quantem:dev` |
 | [Case 2](#case-2-major-feature-development) | Large features, multi-person collaboration | `electronmicroscopy/quantem:<branch>` |
-| [Case 3](#case-3-contributing-to-someones-fork) | Testing someone's prototype, initial/private/non-published algorithm | `<username>/quantem:<branch>` |
+| [Case 3](#case-3-contributing-to-someones-fork) | Developing initial/private algorithm; helping test someone's prototype | `<username>/quantem:<branch>` |
 
 ## Table of contents
 
@@ -183,13 +183,33 @@ When the feature is complete and tested, either Bob or Will can create a PR from
 
 ### Case 3: Contributing to someone's fork
 
-Will is prototyping a new feature on his personal fork and asks Colin for help before it's ready for the main repository. How does Colin contribute to Will's fork?
+Will is prototyping a new alignment algorithm on his personal fork. The code isn't ready for the main repository yet, but Will asks Colin for help testing and improving it.
 
 Here's an overview—follow the steps below first, then use this diagram as a reference:
 
 ![Case 3: Contributing to someone's fork](img/git_workflow_case3.png)
 
-Example: Colin wants to contribute to `wwmills/quantem:align`.
+#### Will starts the prototype
+
+1. Will pulls the latest from upstream:
+   ```bash
+   git checkout dev
+   git pull upstream dev
+   ```
+2. Will creates a branch for the prototype:
+   ```bash
+   git checkout -b align
+   ```
+3. Will makes changes, commits, and pushes to his fork:
+   ```bash
+   git add <files>
+   git commit -m "Add initial alignment algorithm"
+   git push -u origin align
+   ```
+
+Will continues iterating on `wwmills/quantem:align`. When Will needs help, he shares the branch with Colin.
+
+#### Colin joins to help
 
 1. Colin adds Will's fork as a remote:
    ```bash
