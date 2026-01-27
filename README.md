@@ -8,15 +8,9 @@ If you have any questions or find instructions unclear, reach out to @bobleesj.
 
 | Case | When to use | PR target |
 |------|-------------|-----------|
-<<<<<<< HEAD
-| [Case 1](#case-1-quick-fixes-typos-small-bugs-small-features) | Typos, small bugs, documentation | `electronmicroscopy/quantem:dev` |
-| [Case 2](#case-2-major-feature-development) | Large features, multi-person collaboration | `electronmicroscopy/quantem:<branch>` |
-| [Case 3](#case-3-contributing-to-someones-fork) | Developing initial/private algorithm; helping test someone's prototype | `<username>/quantem:<branch>` |
-=======
-| [1](#case-1-quick-fixes-typos-small-bugs-small-features) | Typos, small bugs, documentation | `electronmicroscopy/quantem:dev` |
+| [1](#case-1-prototyping-on-your-fork) | Initial/private algorithm; colleague wants to test and contribute | `<username>/quantem:<branch>` |
 | [2](#case-2-major-feature-development) | Large features, multi-person collaboration | `electronmicroscopy/quantem:<branch>` |
-| [3](#case-3-contributing-to-someones-fork) | Testing someone's prototype, initial/private/non-published algorithm | `<username>/quantem:<branch>` |
->>>>>>> d42428eb6d0044f3d809c2e33e2130433823a2d6
+| [3](#case-3-quick-fixes-typos-small-bugs-small-features) | Typos, small bugs, documentation | `electronmicroscopy/quantem:dev` |
 
 ## Table of contents
 
@@ -63,44 +57,76 @@ For installing `quantem` in development mode with `uv`, setting up pre-commit ho
 
 There are three common cases when contributing to `quantem`:
 
-- **Case 1:** [Quick fixes](#case-1-quick-fixes-typos-small-bugs-small-features) - typos, small bugs, small features, documentation updates
-- **Case 2:** [Major feature development](#case-2-major-feature-development) - larger features requiring collaboration
-- **Case 3:** [Contributing to someone's fork](#case-3-contributing-to-someones-fork) - early-stage work on someone's fork or private repository
+- **Case 1:** [Prototyping on your fork](#case-1-prototyping-on-your-fork) - initial/private algorithm development; colleague helps test
+- **Case 2:** [Major feature development](#case-2-major-feature-development) - larger features requiring collaboration on upstream
+- **Case 3:** [Quick fixes](#case-3-quick-fixes-typos-small-bugs-small-features) - typos, small bugs, small features, documentation updates
 
-### Case 1: Quick fixes (typos, small bugs, small features)
+### Case 1: Prototyping on your fork
 
-You spotted a typo in the README. The fix is small enough that it can go directly to `quantem/dev` as a single PR. How do you contribute it?
+Assume Will is prototyping a new alignment algorithm on his personal fork. The code isn't ready for the main repository yet, but Will asks Colin for help testing and improving it.
 
 Here's an overview—follow the steps below first, then use this diagram as a reference:
 
-![Case 1: Quick fixes](img/git_workflow_case1.png)
+![Case 1: Prototyping on your fork](img/git_workflow_case1.png)
 
-1. Switch to your local `dev` branch (it already exists after cloning) and pull the latest commits from `upstream/dev`:
+#### Will starts the prototype
+
+1. Will checks out his local `dev` branch and pulls the latest from upstream (after cloning, the local `dev` branch has the same commit history as the `dev` branch on his fork):
    ```bash
    git checkout dev
    git pull upstream dev
    ```
-2. Create a local branch called `fix-readme-typo`:
+2. Will creates a local branch off of the latest commits from `dev`:
    ```bash
-   git checkout -b fix-readme-typo
+   git checkout -b align
    ```
-3. Edit `README.md` using your favorite IDE.
-4. Stage and commit the changes:
+3. Will makes changes, commits, and uploads the local branch to his fork:
    ```bash
-   git add README.md
-   git commit -m "Fix typo in README installation section"
-   ```
-5. Upload your local `fix-readme-typo` branch to your fork (origin):
-   ```bash
-   git push -u origin fix-readme-typo
+   git add <files>
+   git commit -m "Add initial alignment algorithm"
+   git push -u origin align
    ```
    > **Note:** The `-u` flag sets upstream tracking. You only need it the first time you push a new branch. After that, `git push` is sufficient.
-6. Verify the branch exists on GitHub by visiting `https://github.com/<your-username>/quantem/tree/fix-readme-typo`.
-7. Go to [https://github.com/electronmicroscopy/quantem](https://github.com/electronmicroscopy/quantem) and click **Compare & pull request** to create a PR from `<your-username>/quantem:fix-readme-typo` to `electronmicroscopy/quantem:dev`. Follow the guidelines in [Making the pull request review process effective](#making-the-pull-request-review-process-effective).
+
+Will continues iterating on `wwmills/quantem:align`. Now Colin wants to contribute and test Will's code. How does Colin contribute?
+
+#### Colin joins to help
+
+1. Colin adds Will's fork URL so he can fetch Will's latest commits:
+   ```bash
+   git remote add will https://github.com/wwmills/quantem.git
+   ```
+2. Colin fetches Will's commits and checks out Will's branch:
+   ```bash
+   git fetch will
+   git checkout will/align
+   ```
+3. Colin creates a local branch off of Will's `align` branch:
+   ```bash
+   git checkout -b align-subpixel
+   ```
+4. Colin makes changes and commits:
+   ```bash
+   git add <files>
+   git commit -m "Add subpixel alignment support"
+   ```
+5. Colin uploads his local `align-subpixel` branch to Colin's fork (`https://github.com/cophus/quantem`):
+   ```bash
+   git push -u origin align-subpixel
+   ```
+6. Colin visits `https://github.com/wwmills/quantem` and clicks the green **Compare & pull request** button to create a PR from `cophus/quantem:align-subpixel` to `wwmills/quantem:align`. Colin follows the guidelines in [Making the pull request review process effective](#making-the-pull-request-review-process-effective).
+
+#### What happens next?
+
+1. Will reviews and merges Colin's PR into `wwmills/quantem:align`.
+2. When the feature is ready, Will creates a PR from `wwmills/quantem:align` to `electronmicroscopy/quantem:dev`.
+3. A maintainer reviews and merges it. Colin's commits are preserved in the contribution history.
+
+> **Note:** If the PR to `quantem/dev` would be too large (e.g., thousands of lines), consider using [Case 2](#case-2-major-feature-development) instead. We don't want to overwhelm core reviewers with massive PRs. Case 2 creates a feature branch on upstream where multiple people can contribute iteratively with smaller, reviewable PRs before merging to `quantem/dev`.
 
 ### Case 2: Major feature development
 
-Bob is building drift correction for `quantem` using PyTorch to speed up computation. This is an actual workflow Bob uses to collaborate with Will. The feature is too large for a single PR and requires multiple iterations before it's ready for `quantem/dev`. How does Bob collaborate with Will so they can build and contribute collectively?
+Here we use the example of Bob. Bob is building drift correction for `quantem` using PyTorch to speed up computation. This is an actual workflow Bob uses to collaborate with Will. The feature is too large for a single PR and requires multiple iterations before it's ready for `quantem/dev`. How does Bob collaborate with Will so they can build and contribute collectively?
 
 Here's an overview—follow the steps below first, then use this diagram as a reference:
 
@@ -185,65 +211,35 @@ Will continues with `drift-torch-validate`, `drift-torch-large-images`, etc. Bot
 
 When the feature is complete and tested, either Bob or Will can create a PR from `electronmicroscopy/quantem:drift-torch` to `electronmicroscopy/quantem:dev` following the [pull request guidelines](#making-the-pull-request-review-process-effective). A maintainer reviews and merges it.
 
-### Case 3: Contributing to someone's fork
+### Case 3: Quick fixes (typos, small bugs, small features)
 
-Will is prototyping a new alignment algorithm on his personal fork. The code isn't ready for the main repository yet, but Will asks Colin for help testing and improving it.
+You spotted a typo in the README. The fix is small enough that it can go directly to `quantem/dev` as a single PR. How do you contribute it?
 
 Here's an overview—follow the steps below first, then use this diagram as a reference:
 
-![Case 3: Contributing to someone's fork](img/git_workflow_case3.png)
+![Case 3: Quick fixes](img/git_workflow_case3.png)
 
-#### Will starts the prototype
-
-1. Will pulls the latest from upstream:
+1. Switch to your local `dev` branch (it already exists after cloning) and pull the latest commits from `upstream/dev`:
    ```bash
    git checkout dev
    git pull upstream dev
    ```
-2. Will creates a branch for the prototype:
+2. Create a local branch called `fix-readme-typo`:
    ```bash
-   git checkout -b align
+   git checkout -b fix-readme-typo
    ```
-3. Will makes changes, commits, and pushes to his fork:
+3. Edit `README.md` using your favorite IDE.
+4. Stage and commit the changes:
    ```bash
-   git add <files>
-   git commit -m "Add initial alignment algorithm"
-   git push -u origin align
+   git add README.md
+   git commit -m "Fix typo in README installation section"
    ```
-
-Will continues iterating on `wwmills/quantem:align`. When Will needs help, he shares the branch with Colin.
-
-#### Colin joins to help
-
-1. Colin adds Will's fork as a remote:
+5. Upload your local `fix-readme-typo` branch to your fork (origin):
    ```bash
-   git remote add will https://github.com/wwmills/quantem.git
+   git push -u origin fix-readme-typo
    ```
-2. Colin fetches and switches to Will's branch:
-   ```bash
-   git fetch will
-   git checkout will/align
-   ```
-3. Colin creates a branch off of Will's `align` branch:
-   ```bash
-   git checkout -b align-subpixel
-   ```
-4. Colin makes changes and commits:
-   ```bash
-   git add <files>
-   git commit -m "Add subpixel alignment support"
-   ```
-5. Colin uploads his local `align-subpixel` branch to his fork (origin):
-   ```bash
-   git push -u origin align-subpixel
-   ```
-6. Colin visits `https://github.com/wwmills/quantem` and creates a PR from `cophus/quantem:align-subpixel` to `wwmills/quantem:align`. Colin follows the guidelines in [Making the pull request review process effective](#making-the-pull-request-review-process-effective).
-
-#### What happens next?
-
-1. Will reviews and merges Colin's PR into `wwmills/quantem:align`.
-2. When the feature is ready, Will creates a PR from `wwmills/quantem:align` to `electronmicroscopy/quantem:dev`.
-3. A maintainer reviews and merges it. Colin's commits are preserved in the contribution history.
+6. Verify the branch exists on GitHub by visiting `https://github.com/<your-username>/quantem/tree/fix-readme-typo`.
+7. Go to [https://github.com/electronmicroscopy/quantem](https://github.com/electronmicroscopy/quantem) and click the green **Compare & pull request** button to create a PR from `<your-username>/quantem:fix-readme-typo` to `electronmicroscopy/quantem:dev`. Follow the guidelines in [Making the pull request review process effective](#making-the-pull-request-review-process-effective).
 
 ## GitHub issues and pull requests
 
@@ -530,7 +526,7 @@ Example: PR from `bobleesj/quantem:fix-typo` to `electronmicroscopy/quantem:dev`
 
 When you check out a remote-tracking branch directly (like `will/align`), Git puts you in "detached HEAD" state. This means you're not on a local branch—you're viewing a snapshot of the remote.
 
-Example from [Case 3](#case-3-contributing-to-someones-fork): When Colin runs `git checkout will/align`, he's in detached HEAD state. Any commits made here won't belong to a branch and could be lost. That's why Colin creates a local branch with `git checkout -b align-subpixel`—this saves his work to a proper branch.
+Example from [Case 1](#case-1-prototyping-on-your-fork): When Colin runs `git checkout will/align`, he's in detached HEAD state. Any commits made here won't belong to a branch and could be lost. That's why Colin creates a local branch with `git checkout -b align-subpixel`—this saves his work to a proper branch.
 
 </details>
 
