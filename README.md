@@ -272,9 +272,9 @@ Examples:
 When a PR addresses an issue, use `Closes #<issue-number>` in the PR body. Once merged, the issue will automatically close (see [PR #151](https://github.com/electronmicroscopy/quantem/pull/151)).
 
 1. Start as a **Draft PR** while work is in progress.
-2. Write a short, descriptive title that matches the branch name. Examples:
-   - `` `quantem.widget` `Show4DSTEM` george v2 ophus v1 `` (branch: `quantem.widget-drift-george-v2-ophus-v1`)
-   - `` `Dataset5dstem` - stack reduction, slicing, match `Dataset4dstem` API ``
+2. Write a short, descriptive title
+   - `Show4DSTEM` - Python widget for real-time 4D-STEM explorer and virtual detectors
+   - `Dataset5dstem` - stack reduction, slicing, match `Dataset4dstem` API
 3. In the body, cover two things: what the PR does and what the reviewer should do. Example:
 
     ```
@@ -299,25 +299,9 @@ Examples:
 - [PR #146](https://github.com/electronmicroscopy/quantem/pull/146) - visual/UI focused (widget, screenshots)
 - [PR #151](https://github.com/electronmicroscopy/quantem/pull/151) - data structure/API design focused
 
-### Guidelines
-
-**We align on priorities first.** Before taking on a large PR, we address the feature or issue during our weekly Zoom quantem meeting or create a GitHub issue to ensure consensus on the approach.
-
-**We focus on the code, not the person.** We keep feedback constructive and stay neutral in PRs and issues.
-
-**We are here to contribute.** We provide constructive feedback to help each other improve.
-
-**We stay accountable and responsive.** Due to the sequential nature of commits, fast iteration is often better. We communicate expected review times and use GitHub's design to keep things moving.
-
-**We maintain balanced code quality.** We follow [NumPy docstring conventions](https://numpydoc.readthedocs.io/en/latest/format.html) and [PEP 8](https://peps.python.org/pep-0008/) standards, and provide example notebooks and tests where necessary.
-
-**We ship, but not broken code.** Prototype freely in your fork or a branch on upstream. Unoptimized code is fine—broken code stays in the fork until it's fixed.
-
-### Using GitHub CLI
+### How do I check out someone's pull request?
 
 GitHub CLI (`gh`) provides shortcuts for common tasks. See [GitHub CLI installation](https://cli.github.com/) if not already installed.
-
-#### How do I check out someone else's pull request?
 
 List open pull requests:
 
@@ -333,19 +317,35 @@ gh pr checkout 146
 
 This creates a local branch with the PR's changes so you can test or review the code.
 
-#### How do I view issues?
+You can also use `gh issue list` and `gh issue view <number>` to view issues from the command line. For more commands, see the [GitHub CLI documentation](https://cli.github.com/manual/).
 
-List open issues:
+### Guidelines
 
-```bash
-gh issue list
-```
+**We align on priorities first.** Before taking on a large PR, we address the feature or issue during our weekly Zoom quantem meeting or create a GitHub issue to ensure consensus on the approach.
 
-View a specific issue:
+**We focus on the code, not the person.** We keep feedback constructive and stay neutral in PRs and issues.
 
-```bash
-gh issue view 42
-```
+**We are here to contribute.** We provide constructive feedback to help each other improve.
+
+**We stay accountable and responsive.** Due to the sequential nature of commits, fast iteration is often better. We communicate expected review times and use GitHub's design to keep things moving.
+
+**We maintain balanced code quality.** We follow [NumPy docstring conventions](https://numpydoc.readthedocs.io/en/latest/format.html) and [PEP 8](https://peps.python.org/pep-0008/) standards, and provide example notebooks and tests where necessary.
+
+**We ship, but not broken code.** Prototype freely in your fork or a branch on upstream. Unoptimized code is fine—broken code stays in the fork until it's fixed.
+
+### Common mistakes to avoid
+
+**Don't commit directly to your local `dev` branch.** You might add commits that won't be merged to `upstream/dev`, which means you'll need to reset—not ideal. Keep your local `dev` in sync by running `git pull upstream dev`, then create a new branch with `git checkout -b <branch-name>`. Starting from the latest code keeps merges smooth.
+
+**Don't push secrets or large data files.** Add `.env` files, API keys, and large datasets to `.gitignore`. Use `git add <specific-files>` instead of `git add .` to avoid accidentally staging unwanted files. Before submitting a PR, check **Files changed** to confirm only intended files are included.
+
+**Don't force push to shared branches.** In Case 2, multiple people contribute to `upstream/drift-torch`. Creating a PR to merge your changes keeps everyone's work safe and the history intact.
+
+**Don't start a large PR without alignment.** Open an issue or discuss in the weekly meeting first. This ensures the feature is needed and helps coordinate efforts across the team.
+
+**Don't mix unrelated changes in one PR.** Keep each PR focused on one thing: a feature, a refactor, or a performance improvement. Focused PRs are easier to review and keep the codebase organized.
+
+**Don't ignore PR feedback.** Respond to each comment saying whether it's been fixed or is out of scope. This keeps the review process moving and ensures alignment between author and reviewer.
 
 ---
 
@@ -542,6 +542,15 @@ git checkout dev    # Switch to another branch
 git checkout my-branch
 git stash pop       # Restore your saved changes
 ```
+
+</details>
+
+<details>
+<summary>What is <b>git push --force</b>?</summary>
+
+A normal `git push` fails if the remote branch has commits your local branch doesn't have—Git protects you from accidentally overwriting work. `git push --force` tells Git: "I know the histories don't match—replace the remote with my local version anyway."
+
+Force push is safe for your own branches on your fork (you're only affecting yourself), but dangerous for shared branches on upstream (you could delete teammates' commits). Use PRs instead of force pushing to shared branches.
 
 </details>
 
