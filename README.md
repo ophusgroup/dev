@@ -8,9 +8,15 @@ If you have any questions or find instructions unclear, reach out to @bobleesj.
 
 | Case | When to use | PR target |
 |------|-------------|-----------|
+<<<<<<< HEAD
 | [Case 1](#case-1-quick-fixes-typos-small-bugs-small-features) | Typos, small bugs, documentation | `electronmicroscopy/quantem:dev` |
 | [Case 2](#case-2-major-feature-development) | Large features, multi-person collaboration | `electronmicroscopy/quantem:<branch>` |
 | [Case 3](#case-3-contributing-to-someones-fork) | Developing initial/private algorithm; helping test someone's prototype | `<username>/quantem:<branch>` |
+=======
+| [1](#case-1-quick-fixes-typos-small-bugs-small-features) | Typos, small bugs, documentation | `electronmicroscopy/quantem:dev` |
+| [2](#case-2-major-feature-development) | Large features, multi-person collaboration | `electronmicroscopy/quantem:<branch>` |
+| [3](#case-3-contributing-to-someones-fork) | Testing someone's prototype, initial/private/non-published algorithm | `<username>/quantem:<branch>` |
+>>>>>>> d42428eb6d0044f3d809c2e33e2130433823a2d6
 
 ## Table of contents
 
@@ -54,8 +60,6 @@ Before contributing, make sure you:
 For installing `quantem` in development mode with `uv`, setting up pre-commit hooks, and managing dependencies, see the [quantem CONTRIBUTORS.md](https://github.com/electronmicroscopy/quantem/blob/dev/CONTRIBUTORS.md).
 
 ## Making your first contribution
-
-**Branch naming:** Use lowercase, hyphenated names. Start with the feature or fix name (e.g., `fix-readme-typo`, `drift-torch-rigid`, `align-subpixel`).
 
 There are three common cases when contributing to `quantem`:
 
