@@ -144,14 +144,14 @@ def case3_quick_fixes():
     ax.add_patch(local_box)
     ax.text(6, 2.85, 'Local (Your Computer)', ha='center', va='center', fontsize=22, fontweight='bold', color='#e65100')
 
-    # Upstream box - black background with white text to indicate dev is the main branch (higher weight)
+    # Upstream box - magenta to indicate dev is the main branch (higher weight)
     upstream_box = FancyBboxPatch((0.8, 4.4), 4.4, 2.4,
                                    boxstyle="round,pad=0.05,rounding_size=0.2",
-                                   facecolor='#263238', edgecolor='#263238', linewidth=2)
+                                   facecolor='#f8bbd9', edgecolor='#c2185b', linewidth=2)
     ax.add_patch(upstream_box)
-    ax.text(3, 6.2, '"upstream"', ha='center', va='center', fontsize=20, fontweight='bold', color='white')
-    ax.text(3, 5.5, 'electronmicroscopy/', ha='center', va='center', fontsize=14, style='italic', color='white')
-    ax.text(3, 4.95, 'quantem:dev', ha='center', va='center', fontsize=14, style='italic', fontweight='bold', color='white')
+    ax.text(3, 6.2, '"upstream"', ha='center', va='center', fontsize=20, fontweight='bold')
+    ax.text(3, 5.5, 'electronmicroscopy/', ha='center', va='center', fontsize=14, style='italic')
+    ax.text(3, 4.95, 'quantem:dev', ha='center', va='center', fontsize=14, style='italic', fontweight='bold')
 
     # Origin box (fork) - Bob's fork
     origin_box = FancyBboxPatch((6.8, 4.4), 4.4, 2.4,
