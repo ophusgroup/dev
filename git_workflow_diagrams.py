@@ -144,10 +144,10 @@ def case3_quick_fixes():
     ax.add_patch(local_box)
     ax.text(6, 2.85, 'Local (Your Computer)', ha='center', va='center', fontsize=22, fontweight='bold', color='#e65100')
 
-    # Upstream box
+    # Upstream box - magenta to indicate dev is the main branch (higher weight)
     upstream_box = FancyBboxPatch((0.8, 4.4), 4.4, 2.4,
                                    boxstyle="round,pad=0.05,rounding_size=0.2",
-                                   facecolor=upstream_color, edgecolor='#1565c0', linewidth=2)
+                                   facecolor='#f8bbd9', edgecolor='#c2185b', linewidth=2)
     ax.add_patch(upstream_box)
     ax.text(3, 6.2, '"upstream"', ha='center', va='center', fontsize=20, fontweight='bold')
     ax.text(3, 5.5, 'electronmicroscopy/', ha='center', va='center', fontsize=14, style='italic')
