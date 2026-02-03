@@ -278,14 +278,14 @@ When a PR addresses an issue, use `Closes #<issue-number>` in the PR body. Once 
 3. In the body, cover two things: what the PR does and what the reviewer should do. Example:
 
     ```
-    ### What does this PR do?
+    ### What problem does this PR address?
 
     Closes #<issue-number>
 
     [Describe the problem this PR solves. Focus on inputs/outputs.
     For new features, show the API design (function signatures, class interfaces).]
 
-    ### What should the reviewer do?
+    ### What should the reviewer(s) do?
 
     [Explain how to test, what to look for, or any dependencies on other PRs]
     ```
