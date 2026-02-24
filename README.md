@@ -294,8 +294,6 @@ When a PR addresses an issue, use `Closes #<issue-number>` in the PR body. Once 
     [Describe the problem this PR solves. Focus on inputs/outputs.
     Attach screenshots, plots, and before/after comparisons.]
 
-    ### API design (for new features)
-
     [Show the function signatures, class interfaces, and how a scientist
     would use this in a notebook. API design is what humans interact with.
     LLMs can read implementation details, but the API is what a scientist
