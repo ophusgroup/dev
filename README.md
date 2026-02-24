@@ -282,7 +282,7 @@ When a PR addresses an issue, use `Closes #<issue-number>` in the PR body. Once 
 
 1. Start as a **Draft PR** while work is in progress.
 2. Write a short, descriptive title (see [How do I write great pull request and issue titles?](#how-do-i-write-great-pull-request-and-issue-titles)).
-3. In the body, showcase the problem you're solving. You're not making a PR for people to review code. You're making a PR to show how you solved a problem. Attach screenshots, plots, and design visuals. Reviewers don't want to open notebooks and run your code to understand what you did. Show them.
+3. In the body, showcase the problem you're solving. You're not making a PR for people to review code. You're making a PR to show how you solved a problem. Attach screenshots, plots, and design visuals. Reviewers as colleagues are here to see how you are using Python to solve a scientific problem, not review your code. Show them.
 
    Every PR has a public URL you can share. The more accessible you make it through visuals and clear writing, the more people can give you feedback without running anything. More reviewers means more input, more potential users, and more impact for your code. It's in your interest to make PRs as engaging as possible. Example:
 
@@ -395,13 +395,17 @@ You can also use `gh issue list` and `gh issue view <number>` to view issues fro
 
 We encourage you to contribute early and often. Everyone on this team is balancing research, coursework, and life. The time someone spends reviewing your code, debugging your error message, or deciphering your commit history is time they're not spending on their own science. Every guideline here exists to respect that.
 
-**Align before you build.** Before taking on a large PR, bring it up at the bi-weekly quantem meeting or open a GitHub issue. Ten minutes of discussion can save weeks of wasted work on something the team doesn't need or would design differently.
+**We focus on the code, not the person.** We keep feedback constructive and stay neutral in PRs and issues.
 
-**Critique the code, not the coder.** "This approach allocates a new array on every loop iteration" gives someone something to fix. "This code is bad" gives them nothing. Good feedback is specific, actionable, and focused on the work.
+**We are here to contribute.** We provide constructive feedback to help each other improve.
 
-**Respond quickly, even if briefly.** A reviewer waiting on your reply can't move forward. If you need more time, say so. "I'll address this by Thursday" is better than silence. Fast iteration keeps everyone unblocked.
+**We stay accountable and responsive.** A reviewer waiting on your reply can't move forward. If you need more time, say so. "I'll address this by Thursday" is better than silence. Fast iteration keeps everyone unblocked.
 
-**Ship working code, not perfect code.** Prototype freely in your fork. Unoptimized code is fine. But broken code stays in the fork until it's fixed, because a broken import wastes every scientist's time the moment they pull.
+**We maintain balanced code quality.** We follow [NumPy docstring conventions](https://numpydoc.readthedocs.io/en/latest/format.html) and [PEP 8](https://peps.python.org/pep-0008/) standards, and provide example notebooks and tests where necessary.
+
+**We ship, but not broken code.** Prototype freely in your fork or a branch on upstream. Unoptimized code is fine. Broken code stays in the fork until it's fixed.
+
+**We align before we build.** Before taking on a large PR, bring it up at the bi-weekly quantem meeting or open a GitHub issue. Ten minutes of discussion can save weeks of wasted work on something the team doesn't need or would design differently.
 
 ### Common mistakes to avoid
 
@@ -430,14 +434,9 @@ We encourage you to contribute early and often. Everyone on this team is balanci
 **Don't create your own coding conventions.** This includes comments, line spacing, and formatting. Always follow [NumPy docstring conventions](https://numpydoc.readthedocs.io/en/latest/format.html) and [PEP 8](https://peps.python.org/pep-0008/) standards.
 
 
----
-
-
 ## Coding standards
 
 Prototyping is fast and messy by design. We encourage you to experiment freely in your fork. But the moment code hits upstream, it becomes shared responsibility. Everyone's time is extremely valuable. Putting the effort into clear, well-structured code respects every scientist who will read, review, and build on it. The code represents our standards, and we want those standards to help scientists. See [Appendix D: Coding standards](#appendix-d-coding-standards) for the details.
-
----
 
 
 ## Troubleshooting
@@ -543,8 +542,6 @@ git pull upstream <branch>
 If there are conflicts, resolve them (see merge conflicts above), then push.
 
 </details>
-
----
 
 ## Appendix A: Glossary
 
@@ -838,7 +835,7 @@ def test_fourier_resample_preserves_scan_shape():
 
 A scientist hits an error at 11pm before a deadline. If the message says `"Invalid scan shape"`, they're stuck. If it says `"Expected 4D array, got shape (256, 256). Pass scan_shape=(rows, cols) to reshape it"`, they fix it in 30 seconds and move on. Good error messages turn a support request into a self-service fix.
 
-A great error message has two parts: **(1) what the user did wrong** and **(2) how to fix it**. Include the actual value that caused the error so the user doesn't have to guess.
+A great error message has two parts: **(1) what the user did wrong** and **(2) a potential next step that fixes it**. Include the actual value that caused the error so the user doesn't have to guess.
 
 ```python
 # Wrong - tells the user nothing
@@ -847,17 +844,18 @@ raise ValueError("Invalid scan shape")
 # Wrong - says what's wrong but not how to fix it
 raise ValueError(f"Got shape {data.shape}, expected 4D array")
 
-# Right - what went wrong, the actual value, and how to fix it
+# Right - talks directly to the user and tells them what to do
 raise ValueError(
-    f"Expected 4D array with shape (scan_rows, scan_cols, det_rows, det_cols), "
-    f"but got shape {data.shape}. "
+    f"You passed a {data.ndim}D array with shape {data.shape}, "
+    f"but Dataset4dstem expects a 4D array "
+    f"(scan_rows, scan_cols, det_rows, det_cols). "
     f"If your data is a flattened scan, pass scan_shape=(rows, cols) "
     f"to Dataset4dstem() to reshape it."
 )
 
-# Right - shows the invalid value and lists all valid options
+# Right - shows what they entered and lists valid options
 raise ValueError(
-    f"Unknown interpolation method '{method}'. "
+    f"You entered method='{method}', which is not supported. "
     f"Choose from: {', '.join(sorted(VALID_METHODS))}."
 )
 ```
