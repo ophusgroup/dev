@@ -295,9 +295,8 @@ When a PR addresses an issue, use `Closes #<issue-number>` in the PR body. Once 
     Attach screenshots, plots, and before/after comparisons.]
 
     [Show the function signatures, class interfaces, and how a scientist
-    would use this in a notebook. API design is what humans interact with.
-    LLMs can read implementation details, but the API is what a scientist
-    actually types. Get this right first.]
+    would use this in a notebook. The API is what a scientist actually
+    types. Get this right first.]
 
     ### What should the reviewer(s) do?
 
@@ -426,7 +425,7 @@ We encourage you to contribute early and often. Everyone on this team is balanci
 
 **Don't leave review comments unanswered.** Respond to each comment saying whether it's been addressed or is out of scope. Unanswered comments leave reviewers guessing and slow down the next round.
 
-**Don't over-engineer tests.** LLMs can generate dozens of tests in seconds, but every test a human has to review, maintain, and debug costs real time. More lines of code is not better. Respect human time above anything else. Write tests that cover how scientists actually use the code, not every possible edge case. See [D2. How do I write effective tests?](#d2-how-do-i-write-effective-tests) for details.
+**Don't over-engineer tests.** Every test a human has to review, maintain, and debug costs real time. More lines of code is not better. Respect human time above anything else. Write tests that cover how scientists actually use the code, not every possible edge case. See [D2. How do I write effective tests?](#d2-how-do-i-write-effective-tests) for details.
 
 **Don't skip the `Examples` section in docstrings.** Most public functions should have at least one usage example. See [D1. How do I write effective docstrings?](#d1-how-do-i-write-effective-docstrings) for details.
 
@@ -925,6 +924,6 @@ def roi_circle(self, radius: float | None = None) -> Self:
     return self
 ```
 
-Type hints go on **public API only**. Internal methods (starting with `_`) don't need them.
+Type hints go on **public API first**. Internal methods (starting with `_`) don't strictly need them, but they're simple to add and can help with readability.
 
 Now it's your turn. Contributing should be enjoyable. It will take dozens of PR iterations to get comfortable, just like learning to drive the microscope. Practice and feedback are the gifts that we have. One of the best ways to improve is to keep seeking feedback, iterate, and learn how to communicate effectively through PRs and code. If you're uncertain about how to write a PR, coding standards, or anything in this guide, feel free to reach out to @bobleesj. You can always make a pull request to your own fork (not upstream) and tag @bobleesj to review your code and communication style.
