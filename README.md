@@ -1,6 +1,6 @@
 # Contributing to open source projects on GitHub
 
-Welcome! This guide teaches you how to contribute to open source using a fork-based workflow. We use [quantem](https://github.com/electronmicroscopy/quantem) as an example, but these patterns work for any project. The goal: you'll never lose work, your collaborators will always know what you're doing, and your code history will tell a coherent story.
+Welcome! This guide teaches you how to contribute to open source using a fork-based workflow. We use [quantem](https://github.com/electronmicroscopy/quantem) as an example, but these patterns work for any project. The goal: you'll never lose work, your collaborators will always know what you're doing, and your code history will tell a coherent story. Contributing to open source is one of the most rewarding ways to grow as a scientist and developer. Writing code to a high standard can feel difficult and overwhelming at first, but it is a great investment in your career. The Git and GitHub skills you build here will serve you for a lifetime.
 
 If you have any questions or find instructions unclear, reach out to @bobleesj.
 
@@ -17,14 +17,18 @@ If you have any questions or find instructions unclear, reach out to @bobleesj.
 1. [How do I set up my computer?](#how-do-i-set-up-my-computer-5-10-minutes)
 2. [Making your first contribution](#making-your-first-contribution)
 3. [GitHub issues and pull requests](#github-issues-and-pull-requests)
-4. [Troubleshooting](#troubleshooting)
-5. [Appendix A: Glossary](#appendix-a-glossary)
-6. [Appendix B: Acronyms](#appendix-b-acronyms)
-7. [Appendix C: SSH for GitHub](#appendix-c-ssh-for-github)
+4. [Coding standards](#coding-standards)
+5. [Troubleshooting](#troubleshooting)
+6. [Appendix A: Glossary](#appendix-a-glossary)
+7. [Appendix B: Acronyms](#appendix-b-acronyms)
+8. [Appendix C: SSH for GitHub](#appendix-c-ssh-for-github)
+9. [Appendix D: Docstrings, tests, error messages, coordinates, and type hints](#appendix-d-coding-standards)
 
-Before contributing, make sure you:
+Before contributing, we invite you to read through:
 
-- [ ] Review the naming philosophy behind clone, fork, origin, upstream, fetch, merge, and pull (see [Appendix A](#appendix-a-glossary)).
+- Read the naming philosophy behind clone, fork, origin, upstream, fetch, merge, and pull (see [Appendix A](#appendix-a-glossary)).
+- Read the coding standards on docstrings, tests, error messages, coordinates, and type hints (see [Appendix D](#appendix-d-coding-standards)).
+- Read [How do I write great pull request and issue titles?](#how-do-i-write-great-pull-request-and-issue-titles)
 
 ## How do I set up my computer? (5-10 minutes)
 
@@ -243,28 +247,33 @@ Here's an overview—follow the steps below first, then use this diagram as a re
 
 ## GitHub issues and pull requests
 
-### Using GitHub issues
+### Why do we write GitHub issues?
 
-Use GitHub issues to report problems or propose new features. Unlike Slack, issues have a permanent URL that can be shared, linked, and accessed by the global community. Tag people with `@username` to send direct notifications.
+GitHub issues are where we discuss what to build, report bugs, and converge on design decisions before writing code. Not everyone can join the bi-weekly dev meeting, but everyone can participate in a GitHub issue. It's a democratized platform where anyone can propose ideas, ask questions, and collaborate regardless of time zone or schedule. Every issue has a permanent URL that anyone can reference months or years later to understand why a feature was designed a certain way, who contributed to the discussion, and what alternatives were considered.
+
+We encourage you to open issues freely. You don't need to have a solution to start a conversation. Before implementing a new feature, **open an issue first**. This gives the team a chance to discuss the problem, explore potential solutions, and align on an approach. It also engages potential users early. See [Issue #149](https://github.com/electronmicroscopy/quantem/issues/149) for an example where the team discussed the 5D-STEM dataset design before implementation.
+
+Tag people with `@username` to send direct notifications.
 
 An issue can be divided into two sections:
 
 ```
-### What is the problem?
+### Problem
 
 [Describe the problem or feature request]
 
-### What are proposed solutions?
+### Proposed solutions
 
 [Describe possible approaches]
 ```
 
-Attach screenshots, error messages, and metadata (Python version, OS, package versions) as needed to help with debugging.
+If you're reporting a bug, you don't have to propose a solution. Reporting the problem is valuable on its own. Attach screenshots, error messages, and metadata (Python version, OS, package versions) as needed to help with debugging. If you're proposing a new feature, put effort into the proposed solutions section. Include screenshots, API design, and use cases so that potential reviewers can read it and brainstorm with you.
 
 Examples:
 
 - [Issue #136](https://github.com/electronmicroscopy/quantem/issues/136) - bug report (Python 3.13 type alias compatibility)
 - [Issue #138](https://github.com/electronmicroscopy/quantem/issues/138) - feature request (`quantem.__version__` support)
+- [Issue #149](https://github.com/electronmicroscopy/quantem/issues/149) - feature design discussion (pre-implementation alignment)
 - [Issue #105](https://github.com/electronmicroscopy/quantem/issues/105) - architecture discussion (whether to add Widget module)
 
 ### Making the pull request review process effective
@@ -272,10 +281,10 @@ Examples:
 When a PR addresses an issue, use `Closes #<issue-number>` in the PR body. Once merged, the issue will automatically close (see [PR #151](https://github.com/electronmicroscopy/quantem/pull/151)).
 
 1. Start as a **Draft PR** while work is in progress.
-2. Write a short, descriptive title
-   - `Show4DSTEM` - Python widget for real-time 4D-STEM explorer and virtual detectors
-   - `Dataset5dstem` - stack reduction, slicing, match `Dataset4dstem` API
-3. In the body, cover two things: what the PR does and what the reviewer should do. Example:
+2. Write a short, descriptive title (see [How do I write great pull request and issue titles?](#how-do-i-write-great-pull-request-and-issue-titles)).
+3. In the body, showcase the problem you're solving. You're not making a PR for people to review code. You're making a PR to show how you solved a problem. Attach screenshots, plots, and design visuals. Reviewers don't want to open notebooks and run your code to understand what you did. Show them.
+
+   Every PR has a public URL you can share. The more accessible you make it through visuals and clear writing, the more people can give you feedback without running anything. More reviewers means more input, more potential users, and more impact for your code. It's in your interest to make PRs as engaging as possible. Example:
 
     ```
     ### What problem does this PR address?
@@ -283,21 +292,84 @@ When a PR addresses an issue, use `Closes #<issue-number>` in the PR body. Once 
     Closes #<issue-number>
 
     [Describe the problem this PR solves. Focus on inputs/outputs.
-    For new features, show the API design (function signatures, class interfaces).]
+    Attach screenshots, plots, and before/after comparisons.]
+
+    ### API design (for new features)
+
+    [Show the function signatures, class interfaces, and how a scientist
+    would use this in a notebook. API design is what humans interact with.
+    LLMs can read implementation details, but the API is what a scientist
+    actually types. Get this right first.]
 
     ### What should the reviewer(s) do?
 
     [Explain how to test, what to look for, or any dependencies on other PRs]
     ```
 
-  > **Note:** Writing represents our internal state as the author. The goal is to externalize our reasoning so the team can make decisions collectively. We write as little as required, but as much as needed—a PR is self-serving documentation for developers and debugging along with commits. Reviewing takes time, and writing effectively respects the reviewer's time so we can prioritize advancing science.
+  > **Note:** Writing represents our internal state as the author. The goal is to externalize our reasoning so the team can make decisions collectively. We write as little as required, but as much as needed. A PR is self-serving documentation for developers and debugging along with commits. Reviewing takes time, and writing effectively respects the reviewer's time so we can prioritize advancing science.
 
 4. Before tagging a reviewer, go to **Files changed** and review our own code. We'll catch mistakes and save everyone time. When ready, tag the reviewer and say "Ready for review."
 5. After receiving feedback, optionally turn the reviewer's comments into a checklist and check off items as you address them. This respects the reviewer's input, acknowledges their feedback, and serves as a to-do list for everyone. If the list is too long or beyond scope, turn it into a GitHub issue for later tracking. After making changes, tag the reviewer again with "Ready for review." See [PR #146](https://github.com/electronmicroscopy/quantem/pull/146) for an example where George and Colin provided design feedback, and [this comment](https://github.com/electronmicroscopy/quantem/pull/146#issuecomment-3765590613) for an example checklist.
+6. **Leave inline comments on your own PR to guide the reviewer.** Don't make the reviewer guess why you made a decision. Add comments on your own diff pointing out non-obvious choices, trade-offs, or areas where you want specific feedback. This saves a round trip and shows you've thought it through.
+
+**For reviewers:** We invite you to review others' work. It's one of the fastest ways to learn the codebase. Reviewing maintains our standards and ensures that code is understood by more than one person. When only the author understands the code, that's a weak link. A thoughtful review reduces those weak links, catches bugs before they reach a scientist's notebook, and helps the author grow. Respect the author's time by being specific, and respect your own time by not re-reviewing things pre-commit already handles.
+
+1. Understand the nature of the problem and how it benefits scientists and the community first. Not the design, not the code, not the technology. The problem first. If the problem is not clear, stop and ask the author to create a GitHub issue. There should already be one. If not, the author should open an issue and discuss what problem the PR solves before adding more commits.
+2. [Check out the branch locally](#how-do-i-check-out-someones-pull-request) and run the tests.
+3. Focus on correctness, API design, test coverage, and docstrings. Don't nitpick formatting if pre-commit handles it.
+4. Be specific. "This will break if scan_shape has an odd dimension" is useful. "Needs work" is not.
+5. Approve when it's good enough, not perfect. If there are remaining concerns, discuss whether another iteration is needed or encourage the author to create an issue to address potential bugs and improvements down the road.
+6. If you request changes, say what "done" means to you as a reviewer.
 
 Examples:
 - [PR #146](https://github.com/electronmicroscopy/quantem/pull/146) - visual/UI focused (widget, screenshots)
 - [PR #151](https://github.com/electronmicroscopy/quantem/pull/151) - data structure/API design focused
+
+### How do I resolve disagreements between reviewers?
+
+We have a common goal of advancing science. When reviewers disagree, you may adopt the following steps:
+
+1. Discuss the code, not the coder. "This approach has O(n^2) complexity" is fine. "You always write slow code" is not.
+2. Try to resolve it between yourselves first. Use inline comments on the PR. If needed, follow up with a private message or a quick call.
+3. If stuck, bring in a third person. A fresh perspective breaks deadlocks.
+4. If still unresolved, present both approaches at the bi-weekly dev meeting. The higher-impact idea wins, not the louder voice or seniority.
+5. Once decided, commit fully. No passive resistance. Code is always evolving. The decision may not be the most optimal one right now, but it can change. If you have a strong reason to revisit it later, bring it up again.
+
+> The best way to avoid disagreements at the PR level is to not have them in the first place. This is why we [write issues](#why-do-we-write-github-issues) and communicate our design and problems clearly before writing code. A PR should be an implementation of a plan the team already agrees on.
+
+### How do I write great pull request and issue titles?
+
+**Why do titles matter?** Our goal is to advance science, not spend time debugging. Every hour someone spends tracing a regression through vague commit messages is an hour not spent on research. PR titles end up in `git log`, release notes, and blame annotations. When someone runs `git log --oneline` a year from now to find where a bug was introduced, `"Infrastructure changes"` is a dead end. `"Fix hot-pixel filter zeroing valid data on Arina datasets"` points them straight to the answer. The time you invest writing a clear title once saves the entire team time forever.
+
+This is part of a broader philosophy: once your code works in your fork and you're past the prototype stage, it's always worth spending time upfront on clear communication and good infrastructure. Prototyping is fast and messy by design. But when code moves to upstream, it becomes shared property. Clear titles, descriptions, and commit messages let the group make decisions collectively and trace problems back to their origin.
+
+A PR title is the first thing a reviewer reads and the last thing a debugger searches. Write it for a stranger 4 years from now.
+
+**Format:** Start with a verb. Describe what the PR does, not which files it touches.
+
+```
+# Wrong
+Updated vector.py
+Infrastructure changes
+Bug fix
+
+# Right
+Add cell-level indexing to Vector
+Fix hot-pixel filter zeroing valid data on Arina datasets
+Remove deprecated rotation_angle parameter
+```
+
+**Issue titles** follow the same pattern. State the problem or request clearly:
+
+```
+# Wrong
+Problem with dataset
+Question about API
+
+# Right
+Dataset4dstem.fourier_resample crashes on odd scan dimensions
+Add quantem.__version__ support for runtime version checking
+```
 
 ### How do I check out someone's pull request?
 
@@ -321,33 +393,52 @@ You can also use `gh issue list` and `gh issue view <number>` to view issues fro
 
 ### Guidelines
 
-**We align on priorities first.** Before taking on a large PR, we address the feature or issue during our weekly Zoom quantem meeting or create a GitHub issue to ensure consensus on the approach.
+We encourage you to contribute early and often. Everyone on this team is balancing research, coursework, and life. The time someone spends reviewing your code, debugging your error message, or deciphering your commit history is time they're not spending on their own science. Every guideline here exists to respect that.
 
-**We focus on the code, not the person.** We keep feedback constructive and stay neutral in PRs and issues.
+**Align before you build.** Before taking on a large PR, bring it up at the bi-weekly quantem meeting or open a GitHub issue. Ten minutes of discussion can save weeks of wasted work on something the team doesn't need or would design differently.
 
-**We are here to contribute.** We provide constructive feedback to help each other improve.
+**Critique the code, not the coder.** "This approach allocates a new array on every loop iteration" gives someone something to fix. "This code is bad" gives them nothing. Good feedback is specific, actionable, and focused on the work.
 
-**We stay accountable and responsive.** Due to the sequential nature of commits, fast iteration is often better. We communicate expected review times and use GitHub's design to keep things moving.
+**Respond quickly, even if briefly.** A reviewer waiting on your reply can't move forward. If you need more time, say so. "I'll address this by Thursday" is better than silence. Fast iteration keeps everyone unblocked.
 
-**We maintain balanced code quality.** We follow [NumPy docstring conventions](https://numpydoc.readthedocs.io/en/latest/format.html) and [PEP 8](https://peps.python.org/pep-0008/) standards, and provide example notebooks and tests where necessary.
-
-**We ship, but not broken code.** Prototype freely in your fork or a branch on upstream. Unoptimized code is fine—broken code stays in the fork until it's fixed.
+**Ship working code, not perfect code.** Prototype freely in your fork. Unoptimized code is fine. But broken code stays in the fork until it's fixed, because a broken import wastes every scientist's time the moment they pull.
 
 ### Common mistakes to avoid
 
-**Don't commit directly to your local `dev` branch.** You might add commits that won't be merged to `upstream/dev`, which means you'll need to reset—not ideal. Keep your local `dev` in sync by running `git pull upstream dev`, then create a new branch with `git checkout -b <branch-name>`. Starting from the latest code keeps merges smooth.
+**Don't commit directly to your local `dev` branch.** Those commits won't match `upstream/dev`, and you'll need to reset. Instead, always branch: `git pull upstream dev` then `git checkout -b <branch-name>`.
 
-**Don't push secrets or large data files.** Add `.env` files, API keys, and large datasets to `.gitignore`. Use `git add <specific-files>` instead of `git add .` to avoid accidentally staging unwanted files. Before submitting a PR, check **Files changed** to confirm only intended files are included.
+**Don't stage everything blindly.** Use `git add <specific-files>` instead of `git add .` to avoid accidentally committing `.env` files, API keys, or large datasets. Before submitting a PR, check **Files changed** to confirm only intended files are included.
 
-**Don't force push to shared branches.** In Case 2, multiple people contribute to `upstream/drift-torch`. Creating a PR to merge your changes keeps everyone's work safe and the history intact.
+**Don't force push to shared branches.** In Case 2, multiple people contribute to `upstream/drift-torch`. Force pushing can erase a teammate's work. Use PRs to merge changes instead.
 
-**Don't start a large PR without alignment.** Open an issue or discuss in the weekly meeting first. This ensures the feature is needed and helps coordinate efforts across the team.
+**Don't start a large PR without alignment.** See "Align before you build" in [Guidelines](#guidelines).
 
-**Don't mix unrelated changes in one PR.** Keep each PR focused on one thing: a feature, a refactor, or a performance improvement. Focused PRs are easier to review and keep the codebase organized.
+**Don't mix unrelated changes in one PR.** One PR, one purpose: a feature, a refactor, or a bug fix. When unrelated changes get bundled together, reviewers spend more time untangling what changed than evaluating whether it's correct.
 
-**Don't ignore PR feedback.** Respond to each comment saying whether it's been fixed or is out of scope. This keeps the review process moving and ensures alignment between author and reviewer.
+**Don't leave review comments unanswered.** Respond to each comment saying whether it's been addressed or is out of scope. Unanswered comments leave reviewers guessing and slow down the next round.
+
+**Don't over-engineer tests.** LLMs can generate dozens of tests in seconds, but every test a human has to review, maintain, and debug costs real time. More lines of code is not better. Respect human time above anything else. Write tests that cover how scientists actually use the code, not every possible edge case. See [D2. How do I write effective tests?](#d2-how-do-i-write-effective-tests) for details.
+
+**Don't skip the `Examples` section in docstrings.** Most public functions should have at least one usage example. See [D1. How do I write effective docstrings?](#d1-how-do-i-write-effective-docstrings) for details.
+
+**Don't write cryptic error messages.** Error messages should guide the user on what to do next without digging into the entire codebase. See [D3. How do I write great error messages?](#d3-how-do-i-write-great-error-messages) for details.
+
+**Don't use your own coordinate system.** Use the `(row, col)` convention in quantem. See [D4. How do I represent coordinates in NumPy, Matplotlib, and quantem?](#d4-how-do-i-represent-coordinates-in-numpy-matplotlib-and-quantem) for details.
+
+**Don't use legacy type hints.** `Optional`, `List`, `Dict`, `Tuple`, `Union`, and `Any` from `typing` are no longer needed in Python 3.11+. See [D5. How do I use type hints?](#d5-how-do-i-use-type-hints) for details.
+
+**Don't create your own coding conventions.** This includes comments, line spacing, and formatting. Always follow [NumPy docstring conventions](https://numpydoc.readthedocs.io/en/latest/format.html) and [PEP 8](https://peps.python.org/pep-0008/) standards.
+
 
 ---
+
+
+## Coding standards
+
+Prototyping is fast and messy by design. We encourage you to experiment freely in your fork. But the moment code hits upstream, it becomes shared responsibility. Everyone's time is extremely valuable. Putting the effort into clear, well-structured code respects every scientist who will read, review, and build on it. The code represents our standards, and we want those standards to help scientists. See [Appendix D: Coding standards](#appendix-d-coding-standards) for the details.
+
+---
+
 
 ## Troubleshooting
 
@@ -585,3 +676,252 @@ cat id_rsa.pub
 4. Under Key, copy and paste the content of the `id_rsa.pub` file. It should start with `ssh-rsa` and end with your email address.
 5. Click **Add SSH key**.
 6. Done!
+
+## Appendix D: Coding standards
+
+### D1. How do I write effective docstrings?
+
+**Why write docstrings?** They appear in three places: **(1)** VS Code and PyCharm show them when you hover over a function, so scientists get instant help without leaving their editor, **(2)** Sphinx pulls them into the official documentation automatically (see [Show2D API docs](https://bobleesj.github.io/quantem.widget/api/show2d.html) for a live example), and **(3)** `help(quantem.Dataset4dstem.fourier_resample)` prints them in the Python REPL. One docstring, three audiences, zero extra work.
+
+We use [NumPy-style docstrings](https://numpydoc.readthedocs.io/en/latest/format.html). A docstring should answer two questions, in this order: **(1) Why does this code exist?** Every function solves a problem. State the problem first. **(2) How does it work and why is it designed this way?** Explain the approach and key design choices so contributors understand the reasoning, not just the interface. The reader is a scientist, not a code reviewer.
+
+```python
+# Wrong - describes implementation
+def roi_annular(self, inner_radius=None, outer_radius=None):
+    """Create a boolean mask by computing pixel distances from the
+    center using torch.cdist, then applying inner/outer thresholds."""
+
+# Right - states the problem, then explains the design
+def roi_annular(self, inner_radius=None, outer_radius=None):
+    """Set ROI mode to annular for ADF/HAADF imaging.
+
+    The annular ROI integrates over a donut-shaped region in the
+    diffraction pattern. Use small inner radii for ADF, larger
+    inner radii for HAADF. The virtual image updates immediately."""
+```
+
+When in doubt: **"Would a scientist in the lab care about this sentence?"**
+If no, it belongs in a code comment, not the docstring.
+
+Docstrings support mathematical notation via reStructuredText. Use `` :math:`E = mc^2` `` for inline math and `.. math::` blocks for display equations. This is especially useful for functions that implement known formulas, so the reader can verify the implementation against the literature.
+
+```python
+def relativistic_wavelength(voltage_kv: float) -> float:
+    """Compute the relativistic de Broglie wavelength of an electron
+
+    At typical TEM accelerating voltages (80-300 kV), relativistic
+    effects shorten the wavelength by several percent. This function
+    uses the relativistic form:
+
+    .. math::
+
+        \lambda = \frac{h}{\sqrt{2 m_0 e V \left(1 + \frac{eV}{2 m_0 c^2}\right)}}
+
+    Parameters
+    ----------
+    voltage_kv : float
+        Accelerating voltage in kilovolts (e.g., 200 for a 200 kV TEM).
+
+    Returns
+    -------
+    float
+        Wavelength in angstroms.
+
+    Examples
+    --------
+    >>> relativistic_wavelength(200)
+    0.02508
+    """
+```
+
+#### Structure
+
+```
+Short one-line summary (imperative mood, no period)
+
+Longer description if needed. State the problem this
+function solves, then explain the design. Supports
+math notation: :math:`k = 2\pi / \lambda` for inline.
+
+Parameters
+----------
+<name> : <type>
+    What it represents and what units it uses.
+<name> : <type>, optional
+    What it controls. Default is <value>.
+
+Returns
+-------
+<type>
+    What the caller gets back.
+
+Examples
+--------
+>>> <most common usage>
+```
+
+**Complete example** (non-widget function from `quantem.core`):
+
+```python
+def fourier_resample(
+    self,
+    new_shape: tuple[int, int],
+    method: str = "lanczos",
+) -> Self:
+    """Rescale scan dimensions without interpolation artifacts in real space
+
+    Resampling in Fourier space avoids the ringing and aliasing that
+    real-space interpolation introduces at sharp edges. This is the
+    preferred way to change scan resolution after acquisition.
+
+    Parameters
+    ----------
+    new_shape : tuple[int, int]
+        Target (rows, cols) for the scan dimensions.
+    method : str, optional
+        Interpolation kernel. Default is "lanczos".
+
+    Returns
+    -------
+    Self
+        A new Dataset with the resampled scan dimensions.
+
+    Examples
+    --------
+    >>> ds = Dataset4dstem("scan.h5")
+    >>> ds_resampled = ds.fourier_resample((128, 128))
+    >>> ds_resampled.scan_shape
+    (128, 128)
+    """
+```
+
+Key rules: `name : type` with spaces around colon. `optional` for parameters with defaults. `>>>` prompt in Examples so Sphinx renders them correctly. 2-3 examples, most common use case first.
+
+#### Common docstring mistakes
+
+- **Don't skip `Examples`.** Even a one-liner is better than nothing.
+- **Don't document `_private` methods.** They don't appear in docs.
+- **Don't repeat the type hint.** `radius : float` → "Radius of the circle in pixels", not "A float specifying the radius..."
+- **Don't describe implementation.** "Compute the virtual image for the current ROI", not "sum pixels in the ROI mask using torch.sum."
+
+### D2. How do I write effective tests?
+
+**Why write tests?** Tests mimic how a scientist actually uses the code. Every test is a real scenario: construct the object, call the method, check the result. This does two things: **(1)** it catches regressions before they reach a scientist's notebook, and **(2)** it shows other contributors how the code is meant to be used. Docstrings explain *why* a function exists, tests show *how* it runs. GitHub Actions runs pytest on every PR, so a failing test blocks the merge before it can affect anyone else.
+
+#### What to test
+
+Test the way a scientist actually uses the code. If you wrote `fourier_resample`, the most important tests are: resample to a smaller shape, resample to a larger shape, check that the output type is correct. That's how scientists will call it. You don't need to immediately test every edge case, extreme array size, or input type combination. Those tests can come later if a real bug surfaces.
+
+**Don't over-engineer tests.** Over-tested code is brittle - every refactor breaks dozens of tests that were testing implementation details nobody cares about. Write the 5 tests that cover 95% of real usage, not the 50 tests that make the code impossible to change. Use your judgment on what matters.
+
+#### Examples
+
+The goal is simple: set up the input, call the function, check the expected output.
+
+```python
+def test_to_numpy_from_torch():
+    tensor = torch.tensor([1.0, 2.0, 3.0])
+    result = to_numpy(tensor)
+    assert isinstance(result, np.ndarray)
+    assert np.allclose(result, [1.0, 2.0, 3.0])
+
+
+def test_fourier_resample_preserves_scan_shape():
+    ds = Dataset4dstem("scan.h5")
+    ds_resampled = ds.fourier_resample((64, 64))
+    assert ds_resampled.scan_shape == (64, 64)
+```
+
+### D3. How do I write great error messages?
+
+**Why do error messages matter?** Scientists working in a Jupyter notebook don't want to stop, open the API documentation, and search for what went wrong. They want to look at the traceback, understand what happened, and fix it on the spot. A great error message is a guide: it tells the user exactly what they did wrong, shows them the actual value that caused the problem, and tells them how to correct it. The goal is that the scientist never has to leave their terminal or notebook to resolve the issue.
+
+A scientist hits an error at 11pm before a deadline. If the message says `"Invalid scan shape"`, they're stuck. If it says `"Expected 4D array, got shape (256, 256). Pass scan_shape=(rows, cols) to reshape it"`, they fix it in 30 seconds and move on. Good error messages turn a support request into a self-service fix.
+
+A great error message has two parts: **(1) what the user did wrong** and **(2) how to fix it**. Include the actual value that caused the error so the user doesn't have to guess.
+
+```python
+# Wrong - tells the user nothing
+raise ValueError("Invalid scan shape")
+
+# Wrong - says what's wrong but not how to fix it
+raise ValueError(f"Got shape {data.shape}, expected 4D array")
+
+# Right - what went wrong, the actual value, and how to fix it
+raise ValueError(
+    f"Expected 4D array with shape (scan_rows, scan_cols, det_rows, det_cols), "
+    f"but got shape {data.shape}. "
+    f"If your data is a flattened scan, pass scan_shape=(rows, cols) "
+    f"to Dataset4dstem() to reshape it."
+)
+
+# Right - shows the invalid value and lists all valid options
+raise ValueError(
+    f"Unknown interpolation method '{method}'. "
+    f"Choose from: {', '.join(sorted(VALID_METHODS))}."
+)
+```
+
+### D4. How do I represent coordinates in NumPy, Matplotlib, and quantem?
+
+**Why `(row, col)`?** Our coordinate convention is grounded in the physical geometry of the microscope. In scanning electron microscopy, the beam scans left-to-right (fast scan direction, columns) and top-to-bottom (slow scan direction, rows). This is exactly how NumPy lays out a 2D array: `array[row, col]`, where `row` is the slow axis and `col` is the fast axis. Our API uses `(row, col)` because it matches both the physics of the scan and the indexing you already use in NumPy. If we used `(x, y)` instead, you'd have to mentally swap axes every time you go between quantem and your arrays. That swap is exactly the kind of silent bug that produces wrong results without raising an error.
+
+All user-facing coordinates use `(row, col)`. The first value is always the row (slow scan, top-to-bottom), the second is the column (fast scan, left-to-right).
+
+This applies everywhere:
+- **Function/method parameters**: `center=(row, col)`, not `center=(x, y)`.
+- **Return values and dicts**: `{"row": r, "col": c}`, not `{"x": x, "y": y}`.
+- **Display and print output**: coordinates shown as `(row, col)` in readouts, `summary()`, and error messages.
+- **Variable names**: `pos_row`/`pos_col`, `roi_row`/`roi_col`, not `pos_x`/`pos_y`.
+
+Internal drawing code (canvas pixel positions, matplotlib `plt.scatter(x, y)`, DOM events) can use `x`/`y` since those are screen coordinates, not image coordinates. But anything exposed to the user must use `(row, col)`.
+
+A common bug: you plot a coordinate with `plt.scatter(row, col)` and the point appears in the wrong place. Matplotlib expects `(x, y)`, which is `(col, row)` in our convention. The table below shows the mapping:
+
+| System | First axis | Second axis | Notes |
+|--------|-----------|-------------|-------|
+| **Our API** | `row` (vertical) | `col` (horizontal) | User-facing, everywhere |
+| **NumPy** | `array[row, col]` | | Same: `row` = axis 0, `col` = axis 1 |
+| **Matplotlib** | `y` (vertical) | `x` (horizontal) | `plt.scatter(col, row)`, axes are swapped |
+
+### D5. How do I use type hints?
+
+**Why type hints?** Type hints let you understand the shape and structure of what a function expects and returns without reading the body. They catch bugs before runtime. When you type `dataset.fourier_resample(` in VS Code, type hints tell the editor what arguments are expected, so it can autocomplete and flag mistakes immediately.
+
+They also keep variable names clean. Without type hints, you end up encoding the type into the name: `stem_dataset_np_array`, `scan_shape_tuple`. With type hints, you can just write `data` or `scan_shape` because hovering in VS Code already shows you it's an `np.ndarray` or `tuple[int, int]`. The type information lives in the signature, not cluttering the name.
+
+We target Python 3.11+. Use built-in generics and `X | Y` union syntax. Do not import `Optional`, `List`, `Dict`, `Tuple`, `Union`, or `Any` from `typing`. These are unnecessary since Python 3.10+.
+
+```python
+# Wrong - legacy typing imports
+from typing import Optional, List, Dict, Tuple, Union, Any
+
+def load(path: Optional[str] = None) -> List[Dict[str, Any]]:
+    ...
+
+def process(data: Union[np.ndarray, torch.Tensor]) -> Tuple[int, int]:
+    ...
+```
+
+```python
+# Right - built-in syntax (Python 3.11+)
+def load(path: str | None = None) -> list[dict[str, object]]:
+    ...
+
+def process(data: np.ndarray | torch.Tensor) -> tuple[int, int]:
+    ...
+```
+
+For methods that return `self` (method chaining), use `Self` from `typing`:
+
+```python
+from typing import Self
+
+def roi_circle(self, radius: float | None = None) -> Self:
+    ...
+    return self
+```
+
+Type hints go on **public API only**. Internal methods (starting with `_`) don't need them.
+
+Now it's your turn. Contributing should be enjoyable. It will take dozens of PR iterations to get comfortable, just like learning to drive the microscope. Practice and feedback are the gifts that we have. One of the best ways to improve is to keep seeking feedback, iterate, and learn how to communicate effectively through PRs and code. If you're uncertain about how to write a PR, coding standards, or anything in this guide, feel free to reach out to @bobleesj. You can always make a pull request to your own fork (not upstream) and tag @bobleesj to review your code and communication style.
