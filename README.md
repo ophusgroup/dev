@@ -441,7 +441,7 @@ We encourage you to contribute early and often. Everyone on this team is balanci
 
 ## Coding standards
 
-Prototyping is fast and messy by design. We encourage you to experiment freely in your fork. But the moment code hits upstream, **it becomes shared responsibility.** Everyone's time is extremely valuable. Putting the effort into clear, well-structured code respects every scientist who will read, review, and build on it. The code represents our standards, and we want those standards to help scientists. See [Appendix D: Coding standards](#appendix-d-coding-standards) for the details.
+Prototyping is fast and messy by design, and you may even submit scientific code and publish a paper with it. But we make it open source to increase impact across the community. We encourage you to experiment freely in your fork. But the moment code hits upstream, **it becomes shared responsibility.** Everyone's time is extremely valuable. Putting the effort into clear, well-structured code respects every scientist who will read, review, and build on it. The code represents our standards, and we want those standards to help scientists. See [Appendix D: Coding standards](#appendix-d-coding-standards) for the details.
 
 
 ## Troubleshooting
