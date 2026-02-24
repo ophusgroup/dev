@@ -419,8 +419,7 @@ We encourage you to contribute early and often. Everyone on this team is balanci
 
 **Don't let upstream feature branches live too long.** The longer a branch diverges from `dev`, the more merge conflicts accumulate and the harder the final merge becomes. Aim to merge feature branches into `dev` within a few weeks, not months.
 
-**Don't name branches too broadly.** `nanobeam` is an entire module, not a feature. Name branches after the specific feature: `nanobeam-subpixel`, `nanobeam-cepstral`, etc. Use clear, consistent naming as shown in [Case 2](#case-2-major-feature-development) (`drift-torch-rigid`, `drift-torch-affine`, `drift-torch-test`). If your broadly named branch isn't merged yet and you keep building on it, you end up with unrelated code that depends on unreviewed code. That's the wrong workflow. See [Issue #4](https://github.com/ophusgroup/dev/issues/4) for a real example where we learned from each other.
-
+**Don't name branches too broadly.** `imaging` is an entire module, not a feature. Name branches after the specific feature: `imaging-cellview`, `imaging-roi-export`, etc. Use clear, consistent naming as shown in [Case 2](#case-2-major-feature-development) (`drift-torch-rigid`, `drift-torch-affine`, `drift-torch-test`).
 **Don't start a large PR without alignment.** See "Align before you build" in [Guidelines](#guidelines).
 
 **Don't mix unrelated changes in one PR.** One PR, one purpose: a feature, a refactor, or a bug fix. When unrelated changes get bundled together, reviewers spend more time untangling what changed than evaluating whether it's correct.
