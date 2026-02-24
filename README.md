@@ -26,9 +26,9 @@ If you have any questions or find instructions unclear, reach out to @bobleesj.
 
 Before contributing, we invite you to read through:
 
-- Read the naming philosophy behind clone, fork, origin, upstream, fetch, merge, and pull (see [Appendix A](#appendix-a-glossary)).
-- Read the coding standards on docstrings, tests, error messages, coordinates, and type hints (see [Appendix D](#appendix-d-coding-standards)).
-- Read [How do I write great pull request and issue titles?](#how-do-i-write-great-pull-request-and-issue-titles)
+- The naming philosophy behind clone, fork, origin, upstream, fetch, merge, and pull (see [Appendix A](#appendix-a-glossary)).
+- The coding standards on docstrings, tests, error messages, coordinates, and type hints (see [Appendix D](#appendix-d-coding-standards)).
+- [How do I write great pull request and issue titles?](#how-do-i-write-great-pull-request-and-issue-titles)
 
 ## How do I set up my computer? (5-10 minutes)
 
@@ -69,7 +69,7 @@ There are three common cases when contributing to `quantem`:
 
 Assume Will is prototyping a new alignment algorithm on his personal fork. The code isn't ready for the main repository yet, but Will asks Colin for help testing and improving it.
 
-Here's an overview—follow the steps below first, then use this diagram as a reference:
+Here's an overview. Follow the steps below first, then use this diagram as a reference:
 
 ![Case 1: Prototyping on your fork](img/git_workflow_case1.png)
 
@@ -132,7 +132,7 @@ Will continues iterating on `wwmills/quantem:align`. Now Colin wants to contribu
 
 Here we use the example of Bob. Bob is building drift correction for `quantem` using PyTorch to speed up computation. This is an actual workflow Bob uses to collaborate with Will. The feature is too large for a single PR and requires multiple iterations before it's ready for `quantem/dev`. How does Bob collaborate with Will so they can build and contribute collectively?
 
-Here's an overview—follow the steps below first, then use this diagram as a reference:
+Here's an overview. Follow the steps below first, then use this diagram as a reference:
 
 ![Case 2: Bob's workflow](img/git_workflow_case2_bob.png)
 
@@ -166,7 +166,7 @@ When multiple people contribute to a branch on upstream, each person creates loc
    ```
 5. Bob visits [https://github.com/electronmicroscopy/quantem](https://github.com/electronmicroscopy/quantem) and clicks the green **Compare & pull request** button to create a PR from `bobleesj/quantem:drift-torch-rigid` to `electronmicroscopy/quantem:drift-torch` (not `dev`). Bob follows the guidelines in [Making the pull request review process effective](#making-the-pull-request-review-process-effective).
 
-For Bob's next contribution, Bob does not branch off from `drift-torch-rigid`. Instead, Bob starts from the latest `upstream/drift-torch` branch—it is the source of truth and contains merged commits from all contributors:
+For Bob's next contribution, Bob does not branch off from `drift-torch-rigid`. Instead, Bob starts from the latest `upstream/drift-torch` branch. It is the source of truth and contains merged commits from all contributors:
 
 1. Bob switches to the branch and pulls the latest:
    ```bash
@@ -209,7 +209,7 @@ Will wants to contribute to the same branch. Will sees `drift-torch`, which cont
    ```
 4. Will visits [https://github.com/electronmicroscopy/quantem](https://github.com/electronmicroscopy/quantem) and clicks the green **Compare & pull request** button to create a PR from `wwmills/quantem:drift-torch-test` to `electronmicroscopy/quantem:drift-torch`. Will follows the guidelines in [Making the pull request review process effective](#making-the-pull-request-review-process-effective).
 
-Will continues with `drift-torch-validate`, `drift-torch-large-images`, etc. Both Bob and Will can contribute simultaneously—the feature-based naming (`-rigid`, `-test`, `-validate`) keeps everyone's work organized and descriptive.
+Will continues with `drift-torch-validate`, `drift-torch-large-images`, etc. Both Bob and Will can contribute simultaneously. The feature-based naming (`-rigid`, `-test`, `-validate`) keeps everyone's work organized and descriptive.
 
 > **Tip:** To avoid merge conflicts, communicate with your team before starting work. Ideally, two people should not edit the same file at the same time. A quick message ("I'm working on `drift.py`") helps prevent conflicts.
 
@@ -219,7 +219,7 @@ When the feature is complete and tested, either Bob or Will can create a PR from
 
 You spotted a typo in the README. The fix is small enough that it can go directly to `quantem/dev` as a single PR. How do you contribute it?
 
-Here's an overview—follow the steps below first, then use this diagram as a reference:
+Here's an overview. Follow the steps below first, then use this diagram as a reference:
 
 ![Case 3: Quick fixes](img/git_workflow_case3.png)
 
@@ -282,7 +282,7 @@ When a PR addresses an issue, use `Closes #<issue-number>` in the PR body. Once 
 
 1. Start as a **Draft PR** while work is in progress.
 2. Write a short, descriptive title (see [How do I write great pull request and issue titles?](#how-do-i-write-great-pull-request-and-issue-titles)).
-3. In the body, showcase the problem you're solving. You're not making a PR for people to review code. You're making a PR to show how you solved a problem. Attach screenshots, plots, and design visuals. Reviewers as colleagues are here to see how you are using Python to solve a scientific problem, not review your code. Show them.
+3. In the body, showcase the problem you're solving. You're not making a PR for people to review code. You're making a PR to show how you solved a problem. Attach screenshots, plots, and design visuals. Your reviewers are colleagues here to see how you use Python to solve a scientific problem, not just review your code. Show them.
 
    Every PR has a public URL you can share. The more accessible you make it through visuals and clear writing, the more people can give you feedback without running anything. More reviewers means more input, more potential users, and more impact for your code. It's in your interest to make PRs as engaging as possible. Example:
 
@@ -339,25 +339,31 @@ We have a common goal of advancing science. When reviewers disagree, you may ado
 
 **Why do titles matter?** Our goal is to advance science, not spend time debugging. Every hour someone spends tracing a regression through vague commit messages is an hour not spent on research. PR titles end up in `git log`, release notes, and blame annotations. When someone runs `git log --oneline` a year from now to find where a bug was introduced, `"Infrastructure changes"` is a dead end. `"Fix hot-pixel filter zeroing valid data on Arina datasets"` points them straight to the answer. The time you invest writing a clear title once saves the entire team time forever.
 
-This is part of a broader philosophy: once your code works in your fork and you're past the prototype stage, it's always worth spending time upfront on clear communication and good infrastructure. Prototyping is fast and messy by design. But when code moves to upstream, it becomes shared property. Clear titles, descriptions, and commit messages let the group make decisions collectively and trace problems back to their origin.
+This is part of a broader philosophy: once your code works in your fork and you're past the prototype stage, it's always worth spending time upfront on clear communication and good infrastructure. Prototyping is fast and messy by design. But when code moves to upstream, **it becomes shared property.** Clear titles, descriptions, and commit messages let the group make decisions collectively and trace problems back to their origin.
 
-A PR title is the first thing a reviewer reads and the last thing a debugger searches. Write it for a stranger 4 years from now.
+A PR title is the first thing a reviewer reads and the last thing a debugger searches.
 
-**Format:** Start with a verb. Describe what the PR does, not which files it touches.
+> Can Bob recall what you did by flipping through merged PRs 4 years from now, right before he is about to graduate? This is the smell test.
+
+**Format:** Start with a verb. Cover what the change is and answer "so what?" (why it matters).
 
 ```
-# Wrong
+# Wrong - what file, no context
 Updated vector.py
 Infrastructure changes
 Bug fix
 
-# Right
+# Wrong - says what, but not why it matters
 Add cell-level indexing to Vector
-Fix hot-pixel filter zeroing valid data on Arina datasets
-Remove deprecated rotation_angle parameter
+Fix hot-pixel filter
+Remove deprecated parameter
+
+# Right - what changed and so what
+Fix hot-pixel filter zeroing valid data on Arina SNSF datasets
+Rename rotation_angle to rotation_angle_deg for explicit degree input in direct ptycho
 ```
 
-**Issue titles** follow the same pattern. State the problem or request clearly:
+**Issue titles** follow the same pattern. Every title must cover two things: **(1) what's happening (bug) or what needs to be done (feature)** and **(2) so what?**
 
 ```
 # Wrong
@@ -365,8 +371,8 @@ Problem with dataset
 Question about API
 
 # Right
-Dataset4dstem.fourier_resample crashes on odd scan dimensions
-Add quantem.__version__ support for runtime version checking
+Dataset4dstem.fourier_resample crashes on odd scan dimensions, blocking 3D reconstruction
+Add quantem.__version__ so users can report their version in bug reports
 ```
 
 ### How do I check out someone's pull request?
@@ -393,9 +399,7 @@ You can also use `gh issue list` and `gh issue view <number>` to view issues fro
 
 We encourage you to contribute early and often. Everyone on this team is balancing research, coursework, and life. The time someone spends reviewing your code, debugging your error message, or deciphering your commit history is time they're not spending on their own science. Every guideline here exists to respect that.
 
-**We focus on the code, not the person.** We keep feedback constructive and stay neutral in PRs and issues.
-
-**We are here to contribute.** We provide constructive feedback to help each other improve.
+**We focus on the code, not the person.** We keep feedback constructive and stay neutral in PRs and issues. We provide feedback to help each other improve.
 
 **We stay accountable and responsive.** A reviewer waiting on your reply can't move forward. If you need more time, say so. "I'll address this by Thursday" is better than silence. Fast iteration keeps everyone unblocked.
 
@@ -436,7 +440,7 @@ We encourage you to contribute early and often. Everyone on this team is balanci
 
 ## Coding standards
 
-Prototyping is fast and messy by design. We encourage you to experiment freely in your fork. But the moment code hits upstream, it becomes shared responsibility. Everyone's time is extremely valuable. Putting the effort into clear, well-structured code respects every scientist who will read, review, and build on it. The code represents our standards, and we want those standards to help scientists. See [Appendix D: Coding standards](#appendix-d-coding-standards) for the details.
+Prototyping is fast and messy by design. We encourage you to experiment freely in your fork. But the moment code hits upstream, **it becomes shared responsibility.** Everyone's time is extremely valuable. Putting the effort into clear, well-structured code respects every scientist who will read, review, and build on it. The code represents our standards, and we want those standards to help scientists. See [Appendix D: Coding standards](#appendix-d-coding-standards) for the details.
 
 
 ## Troubleshooting
@@ -612,9 +616,9 @@ Example: PR from `bobleesj/quantem:fix-typo` to `electronmicroscopy/quantem:dev`
 <details>
 <summary>What is <b>detached HEAD</b> state?</summary>
 
-When you check out a remote-tracking branch directly (like `will/align`), Git puts you in "detached HEAD" state. This means you're not on a local branch—you're viewing a snapshot of the remote.
+When you check out a remote-tracking branch directly (like `will/align`), Git puts you in "detached HEAD" state. This means you're not on a local branch. You're viewing a snapshot of the remote.
 
-Example from [Case 1](#case-1-prototyping-on-your-fork): When Colin runs `git checkout will/align`, he's in detached HEAD state. Any commits made here won't belong to a branch and could be lost. That's why Colin creates a local branch with `git checkout -b align-subpixel`—this saves his work to a proper branch.
+Example from [Case 1](#case-1-prototyping-on-your-fork): When Colin runs `git checkout will/align`, he's in detached HEAD state. Any commits made here won't belong to a branch and could be lost. That's why Colin creates a local branch with `git checkout -b align-subpixel`. This saves his work to a proper branch.
 
 </details>
 
@@ -636,7 +640,7 @@ git stash pop       # Restore your saved changes
 <details>
 <summary>What is <b>git push --force</b>?</summary>
 
-A normal `git push` fails if the remote branch has commits your local branch doesn't have—Git protects you from accidentally overwriting work. `git push --force` tells Git: "I know the histories don't match—replace the remote with my local version anyway."
+A normal `git push` fails if the remote branch has commits your local branch doesn't have. Git protects you from accidentally overwriting work. `git push --force` tells Git: "I know the histories don't match. Replace the remote with my local version anyway."
 
 Force push is safe for your own branches on your fork (you're only affecting yourself), but dangerous for shared branches on upstream (you could delete teammates' commits). Use PRs instead of force pushing to shared branches.
 
@@ -833,7 +837,7 @@ def test_fourier_resample_preserves_scan_shape():
 
 **Why do error messages matter?** Scientists working in a Jupyter notebook don't want to stop, open the API documentation, and search for what went wrong. They want to look at the traceback, understand what happened, and fix it on the spot. A great error message is a guide: it tells the user exactly what they did wrong, shows them the actual value that caused the problem, and tells them how to correct it. The goal is that the scientist never has to leave their terminal or notebook to resolve the issue.
 
-A scientist hits an error at 11pm before a deadline. If the message says `"Invalid scan shape"`, they're stuck. If it says `"Expected 4D array, got shape (256, 256). Pass scan_shape=(rows, cols) to reshape it"`, they fix it in 30 seconds and move on. Good error messages turn a support request into a self-service fix.
+A scientist hits an error at 11pm before a deadline. If the message says `"Invalid scan shape"`, they're stuck. If it says `"You passed a 2D array with shape (256, 256), but Dataset4dstem expects a 4D array. Pass scan_shape=(rows, cols) to reshape it"`, they fix it in 30 seconds and move on. Good error messages turn a support request into a self-service fix.
 
 A great error message has two parts: **(1) what the user did wrong** and **(2) a potential next step that fixes it**. Include the actual value that caused the error so the user doesn't have to guess.
 
