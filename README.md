@@ -282,9 +282,9 @@ When a PR addresses an issue, use `Closes #<issue-number>` in the PR body. Once 
 
 1. Start as a **Draft PR** while work is in progress.
 2. Write a short, descriptive title (see [How do I write great pull request and issue titles?](#how-do-i-write-great-pull-request-and-issue-titles)).
-3. In the body, showcase the problem you're solving. You're not making a PR for people to review code. You're making a PR to show how you solved a problem. Attach screenshots, plots, and design visuals. Your reviewers are colleagues here to see how you use Python to solve a scientific problem, not just review your code. Show them.
+3. In the body, showcase the problem we are solving. Attach screenshots, plots, and design visuals. Our reviewers are colleagues here to see how we use Python to solve a scientific problem.
 
-   Every PR has a public URL you can share. The more accessible you make it through visuals and clear writing, the more people can give you feedback without running anything. More reviewers means more input, more potential users, and more impact for your code. It's in your interest to make PRs as engaging as possible. Example:
+   Every PR has a public URL. The more accessible we make it through visuals and clear writing, the more people can give us feedback without running anything. More reviewers means more input, more potential users, and more impact of our code. I have found a PR can be effective with the following yet minimal framework
 
     ```
     ### What problem does this PR address?
@@ -306,12 +306,12 @@ When a PR addresses an issue, use `Closes #<issue-number>` in the PR body. Once 
   > **Note:** Writing represents our internal state as the author. The goal is to externalize our reasoning so the team can make decisions collectively. We write as little as required, but as much as needed. A PR is self-serving documentation for developers and debugging along with commits. Reviewing takes time, and writing effectively respects the reviewer's time so we can prioritize advancing science.
 
 4. Before tagging a reviewer, go to **Files changed** and review our own code. We'll catch mistakes and save everyone time. When ready, tag the reviewer and say "Ready for review."
-5. After receiving feedback, optionally turn the reviewer's comments into a checklist and check off items as you address them. This respects the reviewer's input, acknowledges their feedback, and serves as a to-do list for everyone. If the list is too long or beyond scope, turn it into a GitHub issue for later tracking. After making changes, tag the reviewer again with "Ready for review." See [PR #146](https://github.com/electronmicroscopy/quantem/pull/146) for an example where George and Colin provided design feedback, and [this comment](https://github.com/electronmicroscopy/quantem/pull/146#issuecomment-3765590613) for an example checklist.
+5. After receiving feedback, optionally turn the reviewer's comments into a checklist and check off items. This respects the reviewer's input, acknowledges their feedback, and serves as a to-do list for everyone. If the list is too long or beyond scope, turn it into a GitHub issue for later tracking. After making changes, tag the reviewer again with "Ready for review." See [PR #146](https://github.com/electronmicroscopy/quantem/pull/146) for an example where George and Colin provided design feedback, and [this comment](https://github.com/electronmicroscopy/quantem/pull/146#issuecomment-3765590613) for an example checklist.
 6. **Leave inline comments on your own PR to guide the reviewer.** **Don't make the reviewer guess why you made a decision.** Add comments on your own diff pointing out non-obvious choices, trade-offs, or areas where you want specific feedback. This saves a round trip and shows you've thought it through.
 
 **For reviewers:** We invite you to review others' work. It's one of the fastest ways to learn the codebase. Reviewing maintains our standards and ensures that code is understood by more than one person. When only the author understands the code, that's a weak link. A thoughtful review reduces those weak links, catches bugs before they reach a scientist's notebook, and helps the author grow. Respect the author's time by being specific, and respect your own time by not re-reviewing things pre-commit already handles.
 
-1. Understand the nature of the problem and how it benefits scientists and the community first. Not the design, not the code, not the technology. The problem first. **If the problem is not clear, stop and ask the author to create a GitHub issue.** There should already be one. If not, the author should open an issue and discuss what problem the PR solves before adding more commits.
+1. Understand the nature of the problem and how it benefits scientists and the community first. Not the design, not the code, not the technology. If not, the author should open an issue and discuss what problem the PR solves before adding more commits.
 2. [Check out the branch locally](#how-do-i-check-out-someones-pull-request) and run the tests.
 3. Focus on correctness, API design, test coverage, and docstrings. Don't nitpick formatting if pre-commit handles it.
 4. Be specific. "This will break if scan_shape has an odd dimension" is useful. "Needs work" is not.
@@ -338,26 +338,24 @@ We have a common goal of advancing science. When reviewers disagree, you may ado
 
 **Why do titles matter?** Our goal is to advance science, not spend time debugging. Every hour someone spends tracing a regression through vague commit messages is an hour not spent on research. PR titles end up in `git log`, release notes, and blame annotations. When someone runs `git log --oneline` a year from now to find where a bug was introduced, `"Infrastructure changes"` is a dead end. `"Fix hot-pixel filter zeroing valid data on Arina datasets"` points them straight to the answer. The time you invest writing a clear title once saves the entire team time forever.
 
-This is part of a broader philosophy: once your code works in your fork and you're past the prototype stage, it's always worth spending time upfront on clear communication and good infrastructure. Prototyping is fast and messy by design. But when code moves to upstream, **it becomes shared property.** Clear titles, descriptions, and commit messages let the group make decisions collectively and trace problems back to their origin.
+This is part of a broader philosophy: once your code works in your fork and you're past the prototype stage, it's often worth spending time upfront on clear communication and good infrastructure. Prototyping is fast and messy by design. But when code moves to upstream, **it becomes shared property.** Clear titles, descriptions, and commit messages let the group make decisions collectively and trace problems back to their origin.
 
 A PR title is the first thing a reviewer reads and the last thing a debugger searches.
-
-> Can Bob recall what you did by flipping through merged PRs 4 years from now, right before he is about to graduate? This is the smell test.
 
 **Format:** Start with a verb. Cover what the change is and answer "so what?" (why it matters).
 
 ```
-# Wrong - what file, no context
+# Bad - what file, no context
 Updated vector.py
 Infrastructure changes
 Bug fix
 
-# Wrong - says what, but not why it matters
+# Good - says what, but not why it matters
 Add cell-level indexing to Vector
 Fix hot-pixel filter
 Remove deprecated parameter
 
-# Right - what changed and so what
+# Great - what changed and so what
 Fix hot-pixel filter zeroing valid data on Arina SNSF datasets
 Rename rotation_angle to rotation_angle_deg for explicit degree input in direct ptycho
 ```
@@ -365,11 +363,11 @@ Rename rotation_angle to rotation_angle_deg for explicit degree input in direct 
 **Issue titles** follow the same pattern. Every title must cover two things: **(1) what's happening (bug) or what needs to be done (feature)** and **(2) so what?**
 
 ```
-# Wrong
+# Good
 Problem with dataset
 Question about API
 
-# Right
+# Great
 Dataset4dstem.fourier_resample crashes on odd scan dimensions, blocking 3D reconstruction
 Add quantem.__version__ so users can report their version in bug reports
 ```
@@ -392,11 +390,11 @@ gh pr checkout 146
 
 This creates a local branch with the PR's changes so you can test or review the code.
 
-You can also use `gh issue list` and `gh issue view <number>` to view issues from the command line. For more commands, see the [GitHub CLI documentation](https://cli.github.com/manual/).
+You may also use `gh issue list` and `gh issue view <number>` to view issues from the command line. For more commands, see the [GitHub CLI documentation](https://cli.github.com/manual/).
 
 ### Guidelines
 
-We encourage you to contribute early and often. Everyone on this team is balancing research, coursework, and life. The time someone spends reviewing your code, debugging your error message, or deciphering your commit history is time they're not spending on their own science. Every guideline here exists to respect that.
+We encourage everyone to contribute early and often. Everyone on this team is balancing research, coursework, and life. The time someone spends reviewing our code, debugging our error message, or deciphering our commit history is time they could be more spent on science. Guidelines are here to respect our collective time:
 
 **We focus on the code, not the person.** We keep feedback constructive and stay neutral in PRs and issues. We provide feedback to help each other improve.
 
@@ -416,10 +414,10 @@ We encourage you to contribute early and often. Everyone on this team is balanci
 
 **Don't force push to shared branches.** In Case 2, multiple people contribute to `upstream/drift-torch`. Force pushing can erase a teammate's work. Use PRs to merge changes instead.
 
-**Don't let upstream feature branches live too long.** The longer a branch diverges from `dev`, the more merge conflicts accumulate and the harder the final merge becomes. Aim to merge feature branches into `dev` within a few weeks, not months.
+**Don't let upstream feature branches live too long.** The longer a branch diverges from `dev`, the more merge conflicts accumulate and the harder the final merge becomes. If possible, aim to merge feature branches into `dev` within a few weeks, not months.
 
 **Don't name branches too broadly.** `imaging` is an entire module, not a feature. Name branches after the specific feature: `imaging-cellview`, `imaging-roi-export`, etc. Use clear, consistent naming as shown in [Case 2](#case-2-major-feature-development) (`drift-torch-rigid`, `drift-torch-affine`, `drift-torch-test`).
-**Don't start a large PR without alignment.** See "Align before you build" in [Guidelines](#guidelines).
+**Don't start a large PR without alignment.** See "Align before building" in [Guidelines](#guidelines).
 
 **Don't mix unrelated changes in one PR.** One PR, one purpose: a feature, a refactor, or a bug fix. When unrelated changes get bundled together, reviewers spend more time untangling what changed than evaluating whether it's correct.
 
@@ -431,11 +429,11 @@ We encourage you to contribute early and often. Everyone on this team is balanci
 
 **Don't write cryptic error messages.** Error messages should guide the user on what to do next without digging into the entire codebase. See [D3. How do I write great error messages?](#d3-how-do-i-write-great-error-messages) for details.
 
-**Don't use your own coordinate system.** Use the `(row, col)` convention in quantem. See [D4. How do I represent coordinates in NumPy, Matplotlib, and quantem?](#d4-how-do-i-represent-coordinates-in-numpy-matplotlib-and-quantem) for details.
+**Don't create your own coordinate system.** Use the `(row, col)` convention in quantem. See [D4. How do I represent coordinates in NumPy, Matplotlib, and quantem?](#d4-how-do-i-represent-coordinates-in-numpy-matplotlib-and-quantem) for details.
 
 **Don't use legacy type hints.** `Optional`, `List`, `Dict`, `Tuple`, `Union`, and `Any` from `typing` are no longer needed in Python 3.11+. See [D5. How do I use type hints?](#d5-how-do-i-use-type-hints) for details.
 
-**Don't create your own coding conventions.** This includes comments, line spacing, and formatting. Always follow [NumPy docstring conventions](https://numpydoc.readthedocs.io/en/latest/format.html) and [PEP 8](https://peps.python.org/pep-0008/) standards.
+**Don't create coding conventions.** This includes comments, line spacing, and formatting. We follow [NumPy docstring conventions](https://numpydoc.readthedocs.io/en/latest/format.html) and [PEP 8](https://peps.python.org/pep-0008/) standards.
 
 
 ## Coding standards
@@ -682,7 +680,7 @@ cat id_rsa.pub
 
 ### D1. How do I write effective docstrings?
 
-**Why write docstrings?** They appear in three places: **(1)** VS Code and PyCharm show them when you hover over a function, so scientists get instant help without leaving their editor, **(2)** Sphinx pulls them into the official documentation automatically (see [Show2D API docs](https://bobleesj.github.io/quantem.widget/api/show2d.html) for a live example), and **(3)** `help(quantem.Dataset4dstem.fourier_resample)` prints them in the Python REPL. One docstring, three audiences, zero extra work.
+**Why write docstrings?** They appear in three places: **(1)** VS Code and PyCharm show them when you hover over a function, so scientists get instant help without leaving their editor, **(2)** Sphinx pulls them into the official documentation automatically (see [Show2D API docs](https://bobleesj.github.io/quantem.widget/api/show2d.html) for a live example), and **(3)** `shift-tab` on Jupyter notebook. One docstring, three audiences, zero extra work.
 
 We use [NumPy-style docstrings](https://numpydoc.readthedocs.io/en/latest/format.html). A docstring should answer two questions, in this order: **(1) Why does this code exist?** Every function solves a problem. State the problem first. **(2) How does it work and why is it designed this way?** Explain the approach and key design choices so contributors understand the reasoning, not just the interface. The reader is a scientist, not a code reviewer.
 
