@@ -658,25 +658,36 @@ Force push is safe for your own branches on your fork (you're only affecting you
 
 ## Appendix C: SSH for GitHub
 
-SSH allows you to push and pull without entering your password every time.
+Optional, but convenient: SSH lets you push and pull without typing your password every time.
 
-In your terminal, run the following commands to generate a new SSH key pair. Replace `<email@example.com>` with your email address.
+Generate a key (replace with your Stanford email; `-N ""` skips the passphrase prompt):
 
 ```bash
-mkdir -p ~/.ssh
-cd ~/.ssh
-ssh-keygen -o -t rsa -C "<email@example.com>"
-cat id_rsa.pub
+ssh-keygen -t ed25519 -C "<SUNetID@stanford.edu>" -f ~/.ssh/id_ed25519 -N ""
+cat ~/.ssh/id_ed25519.pub
 ```
 
-1. Visit https://github.com/settings/keys.
-2. Click **New SSH key**.
-3. Set the Title as `<your-computer-name>-key`.
-4. Under Key, copy and paste the content of the `id_rsa.pub` file. It should start with `ssh-rsa` and end with your email address.
-5. Click **Add SSH key**.
-6. Done!
+1. Visit https://github.com/settings/keys and click **New SSH key**.
+2. Title it `<your-computer-name>-key`, paste the `id_ed25519.pub` line (starts with `ssh-ed25519`), and click **Add SSH key**.
+3. Test it: `ssh -T git@github.com` (type `yes` the first time).
 
-## Appendix D: Coding standards
+Then clone with the SSH URL: `git clone git@github.com:<your-username>/quantem.git`.
+
+### SSH into the Stanford GPU servers (mallard, buffle)
+
+Same idea for the lab's GPU servers: set up your key once, then `ssh mallard` never asks for a password. Replace `<SUNetID>` with your Stanford ID.
+
+```bash
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N ""
+ssh-copy-id <SUNetID>@mallard.stanford.edu
+printf '\nHost mallard\n    HostName mallard.stanford.edu\n    User <SUNetID>\n' >> ~/.ssh/config
+chmod 600 ~/.ssh/config
+
+# RESTART TERMINAL
+ssh mallard
+```
+
+For buffle, run `ssh-copy-id <SUNetID>@buffle.stanford.edu` and append a matching `Host buffle` block (with `HostName buffle.stanford.edu`).
 
 ### D1. How do I write effective docstrings?
 
