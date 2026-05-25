@@ -21,7 +21,7 @@ If you have any questions or find instructions unclear, reach out to @bobleesj.
 5. [Troubleshooting](#troubleshooting)
 6. [Appendix A: Glossary](#appendix-a-glossary)
 7. [Appendix B: Acronyms](#appendix-b-acronyms)
-8. [Appendix C: SSH for GitHub](#appendix-c-ssh-for-github)
+8. [Appendix C: SSH for GitHub and GPU servers](#appendix-c-ssh-for-github-and-gpu-servers)
 9. [Appendix D: Docstrings, tests, error messages, coordinates, and type hints](#appendix-d-coding-standards)
 
 Before contributing, we invite you to read through:
@@ -36,7 +36,7 @@ Before contributing, we invite you to read through:
 
 1. Install Git: https://git-scm.com/
 2. Windows user? Install Git Bash: https://gitforwindows.org/
-3. Set up SSH for GitHub so you don't have to enter your password every time (see [Appendix C](#appendix-c-ssh-for-github)).
+3. Set up SSH for GitHub so you don't have to enter your password every time (see [Appendix C](#appendix-c-ssh-for-github-and-gpu-servers)).
 4. Install GitHub CLI: https://cli.github.com/
 
 #### Fork setup
@@ -656,38 +656,40 @@ Force push is safe for your own branches on your fork (you're only affecting you
 - **GUI** - Graphical User Interface
 - **CI/CD** - Continuous Integration / Continuous Deployment (automated testing and deployment in the cloud, e.g., GitHub Actions)
 
-## Appendix C: SSH for GitHub
+## Appendix C: SSH for GitHub and GPU servers
 
 Optional, but convenient: SSH lets you push and pull without typing your password every time.
 
-Generate a key (replace with your Stanford email; `-N ""` skips the passphrase prompt):
+Generate a key. The `-N ""` at the end sets an empty passphrase, so it runs without asking you any questions:
 
 ```bash
+# replace the email with yours, e.g. "bobleesj@stanford.edu"
 ssh-keygen -t ed25519 -C "<SUNetID@stanford.edu>" -f ~/.ssh/id_ed25519 -N ""
 cat ~/.ssh/id_ed25519.pub
 ```
 
 1. Visit https://github.com/settings/keys and click **New SSH key**.
-2. Title it `<your-computer-name>-key`, paste the `id_ed25519.pub` line (starts with `ssh-ed25519`), and click **Add SSH key**.
+2. Title it `<your-computer-name>-key`, paste the line that `cat` just printed (it starts with `ssh-ed25519`), and click **Add SSH key**.
 3. Test it: `ssh -T git@github.com` (type `yes` the first time).
 
 Then clone with the SSH URL: `git clone git@github.com:<your-username>/quantem.git`.
 
 ### SSH into the Stanford GPU servers (mallard, buffle)
 
-Same idea for the lab's GPU servers: set up your key once, then `ssh mallard` never asks for a password. Replace `<SUNetID>` with your Stanford ID.
+Same idea for the lab's GPU servers, reusing the key you just made. Replace `<SUNetID>` with your Stanford ID (e.g. `bobleesj`).
 
 ```bash
-ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N ""
+# copy your key up, then add a short "mallard" alias to ~/.ssh/config
 ssh-copy-id <SUNetID>@mallard.stanford.edu
 printf '\nHost mallard\n    HostName mallard.stanford.edu\n    User <SUNetID>\n' >> ~/.ssh/config
 chmod 600 ~/.ssh/config
-
-# RESTART TERMINAL
-ssh mallard
 ```
 
+Restart the terminal, then `ssh mallard` logs in with no password (on Stanford's network or VPN).
+
 For buffle, run `ssh-copy-id <SUNetID>@buffle.stanford.edu` and append a matching `Host buffle` block (with `HostName buffle.stanford.edu`).
+
+## Appendix D: Coding standards
 
 ### D1. How do I write effective docstrings?
 
